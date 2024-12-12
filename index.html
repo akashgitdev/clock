@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Styled Clock</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #2b2f2d;
+      font-family: Arial, sans-serif;
+    
+     
+
+    }
+    #clock {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 200px;
+      height: 300px;
+      width: 300px;
+      background-color: red;
+      color: white;
+      font-size: 2.5rem;
+      text-align: center;
+      font-family:'Times New Roman', Times, serif;
+      box-shadow: 0px 0px 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock"></div>
+
+  <script>
+    function updateClock() {
+    const clockElement = document.getElementById('clock');
+    
+    // Ensure the clock element is styled with a background only once
+   
+        clockElement.style.backgroundColor = "red";
+ 
+
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+    // Determine AM/PM and convert to 12-hour format
+    const amPm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12; // Convert 0 to 12 for midnight
+
+    // Update the text content
+    clockElement.textContent = `${hours}:${minutes}:${seconds} ${amPm}`;
+}
+
+function startClock() {
+    // Update clock immediately
+    updateClock();
+
+    // Align to the next second using setTimeout
+    const now = new Date();
+    const delay = 1000 - now.getMilliseconds();
+
+    setTimeout(() => {
+        // Start regular updates with setInterval
+        updateClock();
+        setInterval(updateClock, 1000);
+    }, delay);
+}
+
+// Start the clock
+startClock();
+
+  </script>
+</body>
+</html>
+
